@@ -150,23 +150,18 @@ PantherSpot will use a bottom tab bar with three main sections:
 
 ## Wireframes
 
-Low-fidelity wireframes will be added during Activity 3.
+The following wireframe shows the main PantherSpot screens and navigation flow.
 
-Planned screens:
-
-1. Explore / Study Spot List
-2. Study Spot Detail
-3. Map
-4. Favorites
-5. Filter Sheet *(optional feature)*
+![PantherSpot Wireframe](wireframes/pantherspot-wireframe.png)
 
 ### [BONUS] Digital Wireframes & Mockups
 
-To be completed during Activity 3 if time allows.
+The digital wireframe shows the Explore, Study Spot Detail, Map, Favorites,
+and optional Filter screens, along with the main tab and flow navigation.
 
 ### [BONUS] Interactive Prototype
 
-To be completed during Activity 3 if time allows.
+Not implemented at this milestone.
 
 ---
 
