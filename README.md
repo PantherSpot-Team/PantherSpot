@@ -150,14 +150,24 @@ PantherSpot will use a bottom tab bar with three main sections:
 
 ## Wireframes
 
-The following wireframe shows the main PantherSpot screens and navigation flow.
+The following wireframe shows the main PantherSpot screens and navigation flow, including the Explore, Study Spot Detail, Map, Favorites, and Filter screens.
 
 ![PantherSpot Wireframe](wireframes/pantherspot-wireframe.png)
 
 ### [BONUS] Digital Wireframes & Mockups
 
-The digital wireframe shows the Explore, Study Spot Detail, Map, Favorites,
-and optional Filter screens, along with the main tab and flow navigation.
+The following digital mockup provides a cleaner visual representation of the planned PantherSpot interface while keeping the same features and navigation from the product spec.
+
+![PantherSpot Digital Mockup](wireframes/pantherspot-digital-mockup.png)
+
+The digital mockup includes:
+
+- Explore screen with study spot cards, search, and filtering
+- Filter screen for noise level and amenities
+- Study Spot Detail screen with location details and favorite controls
+- Map screen showing nearby study spot markers
+- Favorites screen with saved study locations
+- Consistent bottom tab navigation between the main screens
 
 ### [BONUS] Interactive Prototype
 
