@@ -153,7 +153,7 @@ A basic map showing outdoor locations, current location, weather, and favorites 
 
 ## PantherSpot
 
-After evaluating the three ideas, I chose **PantherSpot** as the final app idea.
+After evaluating the three ideas, we chose **PantherSpot** as the final app idea.
 
 PantherSpot provides the best balance between usefulness, mobile-specific functionality, and a realistic development scope. The app solves a problem that is familiar to college students: finding a convenient place to study when they are on campus.
 
