@@ -5,9 +5,13 @@
 //  Created by alejandro perez on 11/10/26.
 //
 
+
 import SwiftUI
 
 struct ContentView: View {
+
+    @StateObject private var favoritesManager = FavoritesManager()
+
     var body: some View {
         TabView {
             Tab("Explore", systemImage: "magnifyingglass") {
@@ -22,6 +26,7 @@ struct ContentView: View {
                 FavoritesView()
             }
         }
+        .environmentObject(favoritesManager)
     }
 }
 
