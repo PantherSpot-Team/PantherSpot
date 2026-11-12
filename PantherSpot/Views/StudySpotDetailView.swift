@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct StudySpotDetailView: View {
@@ -7,23 +6,61 @@ struct StudySpotDetailView: View {
     @EnvironmentObject var favoritesManager: FavoritesManager
 
     var body: some View {
-        List {
-            Section("Location") {
-                Text(spot.location)
-            }
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
 
-            Section("About") {
-                Text(spot.description)
-            }
+                // Name & Location Header
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(spot.name)
+                        .font(.largeTitle)
+                        .bold()
 
-            Section("Amenities") {
-                LabeledContent("Noise Level", value: spot.noiseLevel)
-                LabeledContent("Wi-Fi", value: spot.hasWiFi ? "Available" : "Unavailable")
-                LabeledContent("Outlets", value: spot.hasOutlets ? "Available" : "Unavailable")
-                LabeledContent("Seating", value: spot.seatingInfo)
-            }
+                    HStack {
+                        Image(systemName: "mappin.and.ellipse")
+                            .foregroundColor(.red)
+                        Text(spot.location)
+                            .font(.headline)
+                            .foregroundColor(.secondary)
+                    }
+                }
 
-            Section {
+                Divider()
+
+                // Amenities & Environment Details
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Spot Details")
+                        .font(.title2)
+                        .bold()
+
+                    DetailRow(icon: "speaker.wave.2.fill", label: "Noise Level", value: spot.noiseLevel)
+                    DetailRow(
+                        icon: "wifi",
+                        label: "Wi-Fi",
+                        value: spot.hasWiFi ? "Available" : "No Wi-Fi"
+                    )
+                    DetailRow(
+                        icon: "powerplug.fill",
+                        label: "Outlets",
+                        value: spot.hasOutlets ? "Available" : "No Outlets"
+                    )
+                    DetailRow(icon: "chair.lounge.fill", label: "Seating", value: spot.seatingInfo)
+                }
+                .padding()
+                .background(Color(.systemGray6))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+
+                // Description
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("About")
+                        .font(.title2)
+                        .bold()
+
+                    Text(spot.description)
+                        .font(.body)
+                        .foregroundColor(.primary)
+                        .lineSpacing(4)
+                }
+
                 Button {
                     favoritesManager.toggleFavorite(spot)
                 } label: {
@@ -35,10 +72,31 @@ struct StudySpotDetailView: View {
                             ? "heart.fill" : "heart"
                     )
                 }
+
+                Spacer()
             }
+            .padding()
         }
-        .navigationTitle(spot.name)
+        .navigationTitle("Spot Details")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
+// Helper view for info rows
+struct DetailRow: View {
+    let icon: String
+    let label: String
+    let value: String
+
+    var body: some View {
+        HStack {
+            Label(label, systemImage: icon)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            Spacer()
+            Text(value)
+                .font(.subheadline)
+                .bold()
+        }
+    }
+}
