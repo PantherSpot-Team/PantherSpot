@@ -22,8 +22,14 @@ struct ExploreView: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
 
-                            Text("Noise Level: \(spot.noiseLevel)")
-                                .font(.caption)
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Noise Level: \(spot.noiseLevel)")
+                                Text("Wi-Fi: \(spot.hasWiFi ? "Available" : "Unavailable")")
+                                Text("Outlets: \(spot.hasOutlets ? "Available" : "Unavailable")")
+                                Text("Seating: \(spot.seatingInfo)")
+                            }
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                         }
                     }
 
