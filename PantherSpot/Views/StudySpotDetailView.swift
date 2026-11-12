@@ -2,20 +2,19 @@ import SwiftUI
 
 struct StudySpotDetailView: View {
     let spot: StudySpot
-    
-    // Environment property to handle navigation back to Explore
-    @Environment(\.dismiss) private var dismiss
+
+    @EnvironmentObject var favoritesManager: FavoritesManager
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                
+
                 // Name & Location Header
                 VStack(alignment: .leading, spacing: 6) {
                     Text(spot.name)
                         .font(.largeTitle)
                         .bold()
-                    
+
                     HStack {
                         Image(systemName: "mappin.and.ellipse")
                             .foregroundColor(.red)
@@ -24,7 +23,7 @@ struct StudySpotDetailView: View {
                             .foregroundColor(.secondary)
                     }
                 }
-                
+
                 Divider()
 
                 // Amenities & Environment Details
@@ -32,7 +31,7 @@ struct StudySpotDetailView: View {
                     Text("Spot Details")
                         .font(.title2)
                         .bold()
-                    
+
                     DetailRow(icon: "speaker.wave.2.fill", label: "Noise Level", value: spot.noiseLevel)
                     DetailRow(
                         icon: "wifi",
@@ -55,11 +54,23 @@ struct StudySpotDetailView: View {
                     Text("About")
                         .font(.title2)
                         .bold()
-                    
+
                     Text(spot.description)
                         .font(.body)
                         .foregroundColor(.primary)
                         .lineSpacing(4)
+                }
+
+                Button {
+                    favoritesManager.toggleFavorite(spot)
+                } label: {
+                    Label(
+                        favoritesManager.isFavorite(spot)
+                            ? "Remove from Favorites"
+                            : "Add to Favorites",
+                        systemImage: favoritesManager.isFavorite(spot)
+                            ? "heart.fill" : "heart"
+                    )
                 }
 
                 Spacer()
@@ -68,19 +79,6 @@ struct StudySpotDetailView: View {
         }
         .navigationTitle("Spot Details")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button(action: {
-                    dismiss()
-                }) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "chevron.left")
-                        Text("Explore")
-                    }
-                }
-            }
-        }
     }
 }
 
