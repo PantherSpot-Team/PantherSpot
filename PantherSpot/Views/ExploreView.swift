@@ -11,16 +11,20 @@ struct ExploreView: View {
         NavigationStack {
             List(spots) { spot in
                 HStack {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(spot.name)
-                            .font(.headline)
+                    NavigationLink {
+                        StudySpotDetailView(spot: spot)
+                    } label: {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(spot.name)
+                                .font(.headline)
 
-                        Text(spot.location)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                            Text(spot.location)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
 
-                        Text("Noise Level: \(spot.noiseLevel)")
-                            .font(.caption)
+                            Text("Noise Level: \(spot.noiseLevel)")
+                                .font(.caption)
+                        }
                     }
 
                     Spacer()
