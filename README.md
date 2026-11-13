@@ -236,14 +236,7 @@ Issues #9–#16 are created, assigned to the team members below, and added to th
 | Alejandro (`aperez-999`) | #9, #10, #11, #12 | MapKit screen, study spot pins, current location, and navigation from a pin to details |
 | Pedro (`Pedrito0813`) | #13, #14 | Save favorites between launches and add study spot search |
 | Chris (`chriswynns2007`) | #15 | Add filter controls and reset options |
-| `SRM-bot-ship` | #16 | Apply selected filters to Explore results |
-
-#### Work Order
-
-- Alejandro will work through #9–#12 in order so the map changes stay together.
-- Pedro can work on #13 and #14 alongside the map work.
-- After Pedro's search changes in #14 are merged, Chris will add the filter controls in #15. Then SRM-bot-ship will connect them to the results in #16.
-- We will add group-study information to the sample spots and test search and filters together, including no results and clearing the filters.
+| Sreeman (`SRM-bot-ship`) | #16 | Apply selected filters to Explore results |
 
 ### Sprint 3 Plan
 
