@@ -6,6 +6,7 @@
 2. [Product Spec](#Product-Spec)
 3. [Wireframes](#Wireframes)
 4. [Schema](#Schema)
+5. [Sprint Progress](#sprint-progress)
 
 ---
 
@@ -43,12 +44,12 @@ The first version of PantherSpot will focus on FIU study locations, but the idea
 
 ### Required Must-have Stories
 
-- [ ] User can view a list of available study spots.
-- [ ] User can tap a study spot to view detailed information about that location.
+- [x] User can view a list of available study spots.
+- [x] User can tap a study spot to view detailed information about that location.
 - [ ] User can view study spots on a map.
-- [ ] User can view useful information for each study spot such as noise level, seating, Wi-Fi availability, and outlet availability.
-- [ ] User can save a study spot as a favorite.
-- [ ] User can view a list of their saved favorite study spots.
+- [x] User can view useful information for each study spot such as noise level, seating, Wi-Fi availability, and outlet availability.
+- [x] User can save a study spot as a favorite.
+- [x] User can view a list of their saved favorite study spots.
 - [ ] User can see their current location in relation to study spots on the map.
 
 ### Optional Nice-to-have Stories
@@ -66,17 +67,17 @@ The first version of PantherSpot will focus on FIU study locations, but the idea
 
 ### 2. Screen Archetypes
 
-- [ ] **Explore / Study Spot List Screen**
+- [x] **Explore / Study Spot List Screen**
   - User can view a list of available study spots.
   - Each list item displays basic information such as the study spot name, location, and general study environment.
   - User can tap a study spot to open its detail screen.
   - Optional search and filtering controls can be added to this screen.
 
-- [ ] **Study Spot Detail Screen**
+- [x] **Study Spot Detail Screen**
   - User can view detailed information about a selected study spot.
-  - Information may include the spot's name, description, building or area, noise level, seating, Wi-Fi, and outlet availability.
+  - Shows the spot's name, description, building or area, noise level, seating, Wi-Fi, and outlet availability.
   - User can add or remove the study spot from their favorites.
-  - User can view the study spot's location on a map.
+  - Planned for Sprint 2: view the study spot's location on a map.
 
 - [ ] **Map Screen**
   - User can view study spots as annotations on a map.
@@ -84,7 +85,7 @@ The first version of PantherSpot will focus on FIU study locations, but the idea
   - User can tap a map annotation to view information about a study spot.
   - User can navigate from a selected annotation to the Study Spot Detail Screen.
 
-- [ ] **Favorites Screen**
+- [x] **Favorites Screen**
   - User can view study spots they previously saved.
   - User can tap a favorite study spot to open its detail screen.
   - User can remove a study spot from favorites.
@@ -106,35 +107,35 @@ The first version of PantherSpot will focus on FIU study locations, but the idea
 
 ### Tab Navigation (Tab to Screen)
 
-PantherSpot will use a bottom tab bar with three main sections:
+PantherSpot uses a bottom tab bar with three main sections:
 
-- [ ] **Explore**
+- [x] **Explore**
   - Opens the Study Spot List Screen.
 
-- [ ] **Map**
-  - Opens the Map Screen.
+- [x] **Map**
+  - Opens the Map placeholder. MapKit features are planned for Sprint 2.
 
-- [ ] **Favorites**
+- [x] **Favorites**
   - Opens the Favorites Screen.
 
 ---
 
 ### Flow Navigation (Screen to Screen)
 
-- [ ] **Explore / Study Spot List Screen**
+- [x] **Explore / Study Spot List Screen**
   - Tapping a study spot leads to the **Study Spot Detail Screen**.
-  - Tapping optional filter controls opens the **Filter Screen / Sheet**.
+  - Planned for Sprint 2: tapping filter controls opens the **Filter Screen / Sheet**.
 
-- [ ] **Study Spot Detail Screen**
+- [x] **Study Spot Detail Screen**
   - User can return to the previous screen.
   - User can add or remove the study spot from favorites.
-  - User can view the location of the study spot on a map.
+  - Planned for Sprint 2: view the location of the study spot on a map.
 
 - [ ] **Map Screen**
   - Tapping a study spot annotation displays information about that location.
   - Selecting the location leads to the **Study Spot Detail Screen**.
 
-- [ ] **Favorites Screen**
+- [x] **Favorites Screen**
   - Tapping a saved study spot leads to the **Study Spot Detail Screen**.
   - Removing a favorite updates the Favorites Screen.
 
@@ -177,12 +178,73 @@ Not implemented at this milestone.
 
 ## Schema
 
-The data models and networking requirements will be finalized in the next project milestone after the product design is complete.
-
 ### Models
 
-To be completed in a later milestone.
+Sprint 1 uses a `StudySpot` model and three sample FIU locations: Green Library, Graham Center, and Hubert Library. The amenity values are sample data for development.
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `id` | `UUID` | Identifies a study spot |
+| `name` | `String` | Study spot name |
+| `location` | `String` | Campus and building |
+| `description` | `String` | Short description of the spot |
+| `noiseLevel` | `String` | Study environment, such as Quiet or Lively |
+| `hasWiFi` | `Bool` | Whether Wi-Fi is available |
+| `hasOutlets` | `Bool` | Whether outlets are available |
+| `seatingInfo` | `String` | Description of the seating |
+
+`FavoritesManager` keeps a set of favorite study spot IDs shared by Explore and Favorites. Favorites currently last for the app session. Saving them between launches is planned for Sprint 2.
 
 ### Networking
 
-To be completed in a later milestone.
+Sprint 1 reads local sample data and makes no network requests. Maps and current-location features are planned for Sprint 2.
+
+---
+
+## Sprint Progress
+
+### Sprint 1 — Core App Foundation (Unit 8)
+
+We finished the SwiftUI project setup, tab navigation, study spot model, Explore list, detail screen, and favorites flow. Issues #1–#8 are complete and their pull requests are merged.
+
+- [x] Browse three sample FIU study spots with location and amenity information.
+- [x] Open the selected spot's details and return to Explore.
+- [x] Add and remove favorites from Explore and the detail screen.
+- [x] View saved spots in Favorites and open their details.
+- [x] Show an empty state when no favorites are saved.
+- [x] Switch between Explore, Map, and Favorites tabs. The Map tab is a placeholder for Sprint 2.
+
+#### Sprint 1 Demo
+
+The walkthrough shows Explore, study spot details, adding favorites, opening details from Favorites, removing saved spots, and the empty state.
+
+![PantherSpot Sprint 1 walkthrough](media/sprint1-demo.gif)
+
+#### Project Tracking
+
+- [PantherSpot Development board](https://github.com/orgs/PantherSpot-Team/projects/3)
+- [Sprint 1 milestone](https://github.com/PantherSpot-Team/PantherSpot/milestone/1)
+- [Sprint 2 milestone](https://github.com/PantherSpot-Team/PantherSpot/milestone/2)
+- [Sprint 3 milestone](https://github.com/PantherSpot-Team/PantherSpot/milestone/3)
+
+### Sprint 2 Plan
+
+Issues #9–#16 are created, assigned to the team members below, and added to the project board in Backlog under the Sprint 2 milestone.
+
+| Team member | Issues | Work |
+| --- | --- | --- |
+| Alejandro (`aperez-999`) | #9, #10, #11, #12 | MapKit screen, study spot pins, current location, and navigation from a pin to details |
+| Pedro (`Pedrito0813`) | #13, #14 | Save favorites between launches and add study spot search |
+| Chris (`chriswynns2007`) | #15 | Add filter controls and reset options |
+| `SRM-bot-ship` | #16 | Apply selected filters to Explore results |
+
+#### Work Order
+
+- Alejandro will work through #9–#12 in order so the map changes stay together.
+- Pedro can work on #13 and #14 alongside the map work.
+- After Pedro's search changes in #14 are merged, Chris will add the filter controls in #15. Then SRM-bot-ship will connect them to the results in #16.
+- We will add group-study information to the sample spots and test search and filters together, including no results and clearing the filters.
+
+### Sprint 3 Plan
+
+We plan to finish maps and saved favorites in Sprint 2. For Sprint 3, we will focus on testing, fixing bugs, checking layout and accessibility, and getting the demo and README ready for submission.
