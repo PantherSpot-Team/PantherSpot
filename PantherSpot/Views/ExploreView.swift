@@ -1,126 +1,131 @@
-
 import SwiftUI
 
 struct ExploreView: View {
-
-    @EnvironmentObject var favoritesManager: FavoritesManager
-
+    @State private var showingAbout = false
     private let spots = StudySpot.sampleSpots
-
     @State private var showFilters = false
-
-    @State private var selectedNoiseLevel: String = "All"
+    @State private var selectedNoiseLevel = "All"
     @State private var wifiOnly = false
     @State private var outletsOnly = false
+    @State private var draftNoiseLevel = "All"
+    @State private var draftWiFiOnly = false
+    @State private var draftOutletsOnly = false
 
-    private let noiseLevels = ["All", "Quiet", "Moderate", "Loud"]
+    private var noiseLevels: [String] {
+        ["All"] + Set(spots.map(\.noiseLevel)).sorted()
+    }
 
-    // Filter study spots based on selected criteria
+    private var filtersActive: Bool {
+        selectedNoiseLevel != "All" || wifiOnly || outletsOnly
+    }
+
     private var filteredSpots: [StudySpot] {
         spots.filter { spot in
-
-            let matchesNoise =
-                selectedNoiseLevel == "All" ||
-                spot.noiseLevel == selectedNoiseLevel
-
-            let matchesWiFi =
-                !wifiOnly || spot.hasWiFi
-
-            let matchesOutlets =
-                !outletsOnly || spot.hasOutlets
-
-            return matchesNoise &&
-                   matchesWiFi &&
-                   matchesOutlets
+            (selectedNoiseLevel == "All" || spot.noiseLevel == selectedNoiseLevel)
+                && (!wifiOnly || spot.hasWiFi)
+                && (!outletsOnly || spot.hasOutlets)
         }
+    }
+
+    private func clearFilters() {
+        selectedNoiseLevel = "All"
+        wifiOnly = false
+        outletsOnly = false
     }
 
     var body: some View {
         NavigationStack {
-            List(filteredSpots) { spot in
-                HStack {
-                    NavigationLink {
-                        StudySpotDetailView(spot: spot)
-                    } label: {
-                        VStack(alignment: .leading, spacing: 6) {
-
-                            Text(spot.name)
-                                .font(.headline)
-
-                            Text(spot.location)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("Noise Level: \(spot.noiseLevel)")
-
-                                Text("Wi-Fi: \(spot.hasWiFi ? "Available" : "Unavailable")")
-
-                                Text("Outlets: \(spot.hasOutlets ? "Available" : "Unavailable")")
-
-                                Text("Seating: \(spot.seatingInfo)")
-                            }
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        }
-                    }
-
-                    Spacer()
-
-                    Button {
-                        favoritesManager.toggleFavorite(spot)
-                    } label: {
-                        Image(systemName:
-                            favoritesManager.isFavorite(spot)
-                            ? "heart.fill" : "heart"
-                        )
-                        .foregroundStyle(.red)
-                        .font(.title2)
-                    }
-                    .buttonStyle(.borderless)
-                    .accessibilityLabel(
-                        favoritesManager.isFavorite(spot)
-                        ? "Remove from favorites"
-                        : "Add to favorites"
-                    )
+            List {
+                VStack(alignment: .leading, spacing: 16) {
+                    Label("PANTHERSPOT", systemImage: "book.closed.fill")
+                        .font(.caption.weight(.bold))
+                        .tracking(1.5)
+                        .foregroundStyle(Color("BrandGold"))
+                    Text("Find your focus.")
+                        .font(.largeTitle.bold())
+                    Text("A quiet corner or a place between classes. Find your next study spot at FIU.")
+                        .font(.subheadline)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .foregroundStyle(.white.opacity(0.85))
+                    Label("\(spots.count) study spots to explore", systemImage: "mappin.and.ellipse")
+                        .font(.caption.weight(.semibold))
                 }
-                .padding(.vertical, 6)
+                .foregroundStyle(.white)
+                .padding(24)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color("BrandNavy"), in: RoundedRectangle(cornerRadius: 24))
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 20, trailing: 16))
+
+                Text(filtersActive ? "\(filteredSpots.count) of \(spots.count) study spots" : "Around campus")
+                    .font(.title2.bold())
+                    .accessibilityAddTraits(.isHeader)
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+
+                if filteredSpots.isEmpty {
+                    ContentUnavailableView {
+                        Label("No matching study spots", systemImage: "line.3.horizontal.decrease.circle")
+                    } description: {
+                        Text("Try fewer filters to find a place to study.")
+                    } actions: {
+                        Button("Clear Filters", action: clearFilters)
+                            .buttonStyle(.bordered)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                }
+
+                ForEach(filteredSpots) { spot in
+                    StudySpotCard(spot: spot)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 14, trailing: 16))
+                }
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(Color(.systemGroupedBackground))
             .navigationTitle("Explore")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button {
+                        draftNoiseLevel = selectedNoiseLevel
+                        draftWiFiOnly = wifiOnly
+                        draftOutletsOnly = outletsOnly
                         showFilters = true
                     } label: {
-                        Label("Filters", systemImage: "line.3.horizontal.decrease")
+                        Label(filtersActive ? "Filters On" : "Filters", systemImage: "line.3.horizontal.decrease")
+                    }
+                    .accessibilityValue(filtersActive ? "Active" : "None")
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("About PantherSpot", systemImage: "info.circle") {
+                        showingAbout = true
                     }
                 }
             }
             .sheet(isPresented: $showFilters) {
                 NavigationStack {
                     Form {
-
                         Section("Noise Level") {
-                            Picker("Noise Level", selection: $selectedNoiseLevel) {
+                            Picker("Noise Level", selection: $draftNoiseLevel) {
                                 ForEach(noiseLevels, id: \.self) { level in
                                     Text(level).tag(level)
                                 }
                             }
                         }
-
                         Section("Amenities") {
-                            Toggle("Wi-Fi Available", isOn: $wifiOnly)
-
-                            Toggle("Power Outlets Available", isOn: $outletsOnly)
+                            Toggle("Wi-Fi Available", isOn: $draftWiFiOnly)
+                            Toggle("Power Outlets Available", isOn: $draftOutletsOnly)
                         }
-
                         Section {
-                            Button("Clear All Filters") {
-                                selectedNoiseLevel = "All"
-                                wifiOnly = false
-                                outletsOnly = false
+                            Button("Reset Filters") {
+                                draftNoiseLevel = "All"
+                                draftWiFiOnly = false
+                                draftOutletsOnly = false
                             }
-                            .foregroundStyle(.red)
                         }
                     }
                     .navigationTitle("Filter Study Spots")
@@ -128,16 +133,21 @@ struct ExploreView: View {
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Apply") {
+                                selectedNoiseLevel = draftNoiseLevel
+                                wifiOnly = draftWiFiOnly
+                                outletsOnly = draftOutletsOnly
                                 showFilters = false
                             }
                         }
-
                         ToolbarItem(placement: .cancellationAction) {
-                            Button("Cancel") {
-                                showFilters = false
-                            }
+                            Button("Cancel") { showFilters = false }
                         }
                     }
+                }
+            }
+            .sheet(isPresented: $showingAbout) {
+                WelcomeView(actionTitle: "Back to Exploring") {
+                    showingAbout = false
                 }
             }
         }
