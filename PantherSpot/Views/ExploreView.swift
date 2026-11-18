@@ -1,60 +1,63 @@
-
 import SwiftUI
 
 struct ExploreView: View {
-
-    @EnvironmentObject var favoritesManager: FavoritesManager
-
+    @State private var showingAbout = false
     private let spots = StudySpot.sampleSpots
 
     var body: some View {
         NavigationStack {
-            List(spots) { spot in
-                HStack {
-                    NavigationLink {
-                        StudySpotDetailView(spot: spot)
-                    } label: {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(spot.name)
-                                .font(.headline)
-
-                            Text(spot.location)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("Noise Level: \(spot.noiseLevel)")
-                                Text("Wi-Fi: \(spot.hasWiFi ? "Available" : "Unavailable")")
-                                Text("Outlets: \(spot.hasOutlets ? "Available" : "Unavailable")")
-                                Text("Seating: \(spot.seatingInfo)")
-                            }
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        }
-                    }
-
-                    Spacer()
-
-                    Button {
-                        favoritesManager.toggleFavorite(spot)
-                    } label: {
-                        Image(systemName:
-                            favoritesManager.isFavorite(spot)
-                            ? "heart.fill" : "heart"
-                        )
-                        .foregroundStyle(.red)
-                        .font(.title2)
-                    }
-                    .buttonStyle(.borderless)
-                    .accessibilityLabel(
-                        favoritesManager.isFavorite(spot)
-                        ? "Remove from favorites"
-                        : "Add to favorites"
-                    )
+            List {
+                VStack(alignment: .leading, spacing: 16) {
+                    Label("PANTHERSPOT", systemImage: "book.closed.fill")
+                        .font(.caption.weight(.bold))
+                        .tracking(1.5)
+                        .foregroundStyle(Color("BrandGold"))
+                    Text("Find your focus.")
+                        .font(.largeTitle.bold())
+                    Text("A quiet corner or a place between classes. Find your next study spot at FIU.")
+                        .font(.subheadline)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .foregroundStyle(.white.opacity(0.85))
+                    Label("\(spots.count) study spots to explore", systemImage: "mappin.and.ellipse")
+                        .font(.caption.weight(.semibold))
                 }
-                .padding(.vertical, 6)
+                .foregroundStyle(.white)
+                .padding(24)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color("BrandNavy"), in: RoundedRectangle(cornerRadius: 24))
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 20, trailing: 16))
+
+                Text("Around campus")
+                    .font(.title2.bold())
+                    .accessibilityAddTraits(.isHeader)
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+
+                ForEach(spots) { spot in
+                    StudySpotCard(spot: spot)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 14, trailing: 16))
+                }
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .background(Color(.systemGroupedBackground))
             .navigationTitle("Explore")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("About PantherSpot", systemImage: "info.circle") {
+                        showingAbout = true
+                    }
+                }
+            }
+            .sheet(isPresented: $showingAbout) {
+                WelcomeView(actionTitle: "Back to Exploring") {
+                    showingAbout = false
+                }
+            }
         }
     }
 }
@@ -63,4 +66,3 @@ struct ExploreView: View {
     ExploreView()
         .environmentObject(FavoritesManager())
 }
-
