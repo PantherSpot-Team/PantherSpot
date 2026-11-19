@@ -180,14 +180,18 @@ Not implemented at this milestone.
 
 ### Models
 
-Sprint 1 uses a `StudySpot` model and three sample FIU locations: Green Library, Graham Center, and Hubert Library. The amenity values are sample data for development.
+The `StudySpot` catalog now includes six FIU locations across MMC and BBC. Sprint 1 started with Green Library, Graham Center, and Hubert Library; the expanded catalog adds Starbucks at MANGO, Wolfe University Center, and the Academic One Tutoring Center. Amenity values remain sample information. Building references, coordinates, and access notes are recorded in [study spot sources](study-spot-sources.md).
 
 | Property | Type | Description |
 | --- | --- | --- |
 | `id` | `UUID` | Identifies a study spot |
 | `name` | `String` | Study spot name |
+| `campus` | `Campus` | MMC or BBC, used by the map selector |
 | `location` | `String` | Campus and building |
+| `coordinate` | `CLLocationCoordinate2D` | Approximate building location |
 | `description` | `String` | Short description of the spot |
+| `informationTitle` | `String` | Label for the official FIU information link |
+| `informationURL` | `URL` | Official FIU location or access information |
 | `noiseLevel` | `String` | Study environment, such as Quiet or Lively |
 | `hasWiFi` | `Bool` | Whether Wi-Fi is available |
 | `hasOutlets` | `Bool` | Whether outlets are available |
