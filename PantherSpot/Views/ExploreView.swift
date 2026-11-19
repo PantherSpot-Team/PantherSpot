@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ExploreView: View {
-    @State private var showingAbout = false
+    @State private var showingSettings = false
     private let spots = StudySpot.sampleSpots
 
     var body: some View {
@@ -48,15 +48,13 @@ struct ExploreView: View {
             .navigationTitle("Explore")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("About PantherSpot", systemImage: "info.circle") {
-                        showingAbout = true
+                    Button("Settings", systemImage: "gearshape") {
+                        showingSettings = true
                     }
                 }
             }
-            .sheet(isPresented: $showingAbout) {
-                WelcomeView(actionTitle: "Back to Exploring") {
-                    showingAbout = false
-                }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView()
             }
         }
     }
