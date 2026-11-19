@@ -2,19 +2,94 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.openURL) private var openURL
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var userLocation = UserLocationManager()
-    @State private var cameraPosition: MapCameraPosition = .automatic
+    @State private var cameraPosition = Self.cameraFitting(StudySpot.sampleSpots)
+    @State private var selectedCampus: Campus?
     @State private var showingLocationError = false
     @State private var selectedSpotID: UUID?
 
     private let spots = StudySpot.sampleSpots
 
+    private var visibleSpots: [StudySpot] {
+        spots.filter { selectedCampus == nil || $0.campus == selectedCampus }
+    }
+
     private var selectedSpot: StudySpot? {
-        spots.first { $0.id == selectedSpotID }
+        visibleSpots.first { $0.id == selectedSpotID }
+    }
+
+    private static func cameraFitting(_ spots: [StudySpot]) -> MapCameraPosition {
+        guard let first = spots.first else { return .automatic }
+        var rect = MKMapRect(origin: MKMapPoint(first.coordinate), size: MKMapSize(width: 1, height: 1))
+        for spot in spots.dropFirst() {
+            rect = rect.union(MKMapRect(origin: MKMapPoint(spot.coordinate), size: MKMapSize(width: 1, height: 1)))
+        }
+        let padding = max(max(rect.width, rect.height) * 0.15,
+                          150 * MKMapPointsPerMeterAtLatitude(first.coordinate.latitude))
+        return .rect(rect.insetBy(dx: -padding, dy: -padding))
+    }
+
+    private func selectCampus(_ campus: Campus?) {
+        userLocation.cancelRequest()
+        selectedCampus = campus
+        if !visibleSpots.contains(where: { $0.id == selectedSpotID }) {
+            selectedSpotID = nil
+        }
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.4)) {
+            cameraPosition = Self.cameraFitting(visibleSpots)
+        }
+    }
+
+    private func showAllSpots() {
+        selectedSpotID = nil
+        selectCampus(nil)
+    }
+
+    private func focus(on spot: StudySpot) {
+        selectCampus(spot.campus)
+        selectedSpotID = spot.id
+        withAnimation(reduceMotion ? nil : .smooth(duration: 0.4)) {
+            cameraPosition = .region(MKCoordinateRegion(
+                center: spot.coordinate,
+                latitudinalMeters: 600,
+                longitudinalMeters: 600
+            ))
+        }
+    }
+
+    private var campusPicker: some View {
+        Picker("Campus", selection: Binding(get: { selectedCampus }, set: { selectCampus($0) })) {
+            Text("All Campuses").tag(Campus?.none)
+            ForEach(Campus.allCases) { campus in
+                Text(campus.rawValue)
+                    .accessibilityLabel(campus.name)
+                    .tag(Optional(campus))
+            }
+        }
+    }
+
+    private var campusSummary: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack {
+                Text("\(visibleSpots.count) study spots")
+                    .font(.subheadline.weight(.medium))
+                Spacer(minLength: 16)
+                Button("Show All Spots", action: showAllSpots)
+                    .font(.subheadline)
+            }
+            .fixedSize(horizontal: true, vertical: false)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("\(visibleSpots.count) study spots")
+                    .font(.subheadline.weight(.medium))
+                Button("Show All Spots", action: showAllSpots)
+                    .font(.subheadline)
+            }
+        }
     }
 
     @ViewBuilder
@@ -31,13 +106,29 @@ struct MapView: View {
                     UserAnnotation()
                 }
 
-                ForEach(spots) { spot in
+                ForEach(visibleSpots) { spot in
                     Marker(spot.name, coordinate: spot.coordinate)
                         .tag(spot.id)
                         .tint(Color.accentColor)
                 }
             }
             .navigationTitle("Map")
+            .navigationBarTitleDisplayMode(.inline)
+            .safeAreaInset(edge: .top) {
+                VStack(alignment: .leading, spacing: 12) {
+                    if dynamicTypeSize.isAccessibilitySize {
+                        campusPicker.pickerStyle(.menu)
+                    } else {
+                        campusPicker.pickerStyle(.segmented)
+                    }
+                    campusSummary
+                }
+                .padding()
+                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
+                .padding(.horizontal)
+                .padding(.top, 8)
+                .padding(.bottom, 8)
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("My Location", systemImage: "location") {
@@ -49,24 +140,12 @@ struct MapView: View {
 
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu("Study spots", systemImage: "mappin.and.ellipse") {
-                        Button("Show all spots") {
-                            selectedSpotID = nil
-                            withAnimation(reduceMotion ? nil : .smooth(duration: 0.4)) {
-                                cameraPosition = .automatic
-                            }
-                        }
+                        Button("Show all spots", action: showAllSpots)
 
-                        ForEach(spots) { spot in
-                            Button(spot.name) {
-                                selectedSpotID = spot.id
-                                withAnimation(reduceMotion ? nil : .smooth(duration: 0.4)) {
-                                    cameraPosition = .region(
-                                        MKCoordinateRegion(
-                                            center: spot.coordinate,
-                                            latitudinalMeters: 600,
-                                            longitudinalMeters: 600
-                                        )
-                                    )
+                        ForEach(Campus.allCases) { campus in
+                            Section(campus.name) {
+                                ForEach(spots.filter { $0.campus == campus }) { spot in
+                                    Button(spot.name) { focus(on: spot) }
                                 }
                             }
                         }
@@ -114,6 +193,10 @@ struct MapView: View {
                             .labelStyle(.titleAndIcon)
                             .font(.caption.weight(.medium))
                             .foregroundStyle(.secondary)
+
+                            Text("Amenities are sample information.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
 
                             NavigationLink {
                                 StudySpotDetailView(spot: spot)

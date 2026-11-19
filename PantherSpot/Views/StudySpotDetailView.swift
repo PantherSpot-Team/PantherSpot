@@ -84,6 +84,9 @@ struct StudySpotDetailView: View {
                     DetailRow(icon: "powerplug.fill", label: "Outlets", value: spot.hasOutlets ? "Available" : "Not available")
                     Divider()
                     DetailRow(icon: "chair.lounge.fill", label: "Seating", value: spot.seatingInfo)
+                    Text("Amenity details are sample information. Check current conditions when you arrive.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
                 .padding(20)
                 .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 20))
@@ -93,6 +96,12 @@ struct StudySpotDetailView: View {
                         .font(.title2.bold())
                     Text(spot.description)
                         .lineSpacing(4)
+                    Link(destination: spot.informationURL) {
+                        Label(spot.informationTitle, systemImage: "arrow.up.right.square")
+                            .font(.subheadline.weight(.semibold))
+                            .frame(minHeight: 44, alignment: .leading)
+                    }
+                    .accessibilityHint("Opens an official FIU website in your browser.")
                 }
                 .padding(.horizontal, 4)
 
