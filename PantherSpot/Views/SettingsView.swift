@@ -117,7 +117,7 @@ private struct HowToUseView: View {
             Section {
                 Label("Build your shortlist", systemImage: "heart")
                     .font(.headline)
-                Text("Tap a heart to save a spot. Open the Favorites tab to see your shortlist, view details, or remove a saved spot.")
+                Text("Tap a heart to save a spot. Open the Favorites tab to see your shortlist, view details, or remove a saved spot. Your favorites stay saved on this device when you reopen the app.")
             }
             Section {
                 Label("Find your way", systemImage: "map")

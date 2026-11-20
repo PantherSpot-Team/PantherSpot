@@ -2,10 +2,10 @@
 
 ## Table of Contents
 
-1. [Overview](#Overview)
-2. [Product Spec](#Product-Spec)
-3. [Wireframes](#Wireframes)
-4. [Schema](#Schema)
+1. [Overview](#overview)
+2. [Product Spec](#product-spec)
+3. [Wireframes](#wireframes)
+4. [Schema](#schema)
 5. [Sprint Progress](#sprint-progress)
 
 ---
@@ -18,15 +18,15 @@
 
 Students often have time between classes but may not know where they can find a quiet place with seating, Wi-Fi, outlets, or enough space to work with a group. PantherSpot brings this information together in one mobile app.
 
-Users will be able to browse available study locations, view them on a map, see useful details about each location, and save their favorite study spots for quick access later.
+Users can browse study locations, view them on a map, compare useful details, and save their favorite study spots for quick access later.
 
-The first version of PantherSpot will focus on FIU study locations, but the idea could later be expanded to other college campuses.
+The first version of PantherSpot focuses on FIU study locations, but the idea could later be expanded to other college campuses.
 
 ### App Evaluation
 
 - **Category:** Education / Productivity / Lifestyle
 
-- **Mobile:** PantherSpot is especially useful as a mobile app because students are likely to search for a study location while already walking around campus. The app can use **Core Location** to determine the user's location and **MapKit** to display nearby study spots. Mobile features such as maps, location services, saved favorites, and possibly photos make the experience more useful than a basic website.
+- **Mobile:** PantherSpot is especially useful as a mobile app because students are likely to search for a study location while already walking around campus. The app uses **Core Location** for optional current location and **MapKit** to display study spots. Maps, location services, and saved favorites help students find and return to a place while on campus.
 
 - **Story:** Students frequently need somewhere to study between classes, especially when libraries or their usual locations are crowded. PantherSpot solves this problem by giving students one place to discover study locations and quickly compare useful information such as noise level, seating, outlets, and Wi-Fi availability.
 
@@ -34,7 +34,7 @@ The first version of PantherSpot will focus on FIU study locations, but the idea
 
 - **Habit:** Students could use PantherSpot several times per week when deciding where to study before or after class. Favorites and nearby-location features encourage users to return instead of repeatedly searching for the same locations.
 
-- **Scope:** PantherSpot has a manageable MVP that can be completed during the course. The required version will focus on browsing locations, viewing details, displaying locations on a map, and saving favorites. More complex features such as ratings, filters, photos, user-submitted locations, or notifications can be added later if time allows.
+- **Scope:** PantherSpot has a manageable MVP that can be completed during the course. The app supports browsing locations, viewing details, maps, saved favorites, search, and filters. Ratings, photos, user-submitted locations, and notifications remain possible future additions.
 
 ---
 
@@ -46,16 +46,17 @@ The first version of PantherSpot will focus on FIU study locations, but the idea
 
 - [x] User can view a list of available study spots.
 - [x] User can tap a study spot to view detailed information about that location.
-- [ ] User can view study spots on a map.
+- [x] User can view study spots on a map.
 - [x] User can view useful information for each study spot such as noise level, seating, Wi-Fi availability, and outlet availability.
 - [x] User can save a study spot as a favorite.
 - [x] User can view a list of their saved favorite study spots.
-- [ ] User can see their current location in relation to study spots on the map.
+- [x] User can keep saved favorites after closing and reopening the app.
+- [x] User can see their current location in relation to study spots on the map.
 
 ### Optional Nice-to-have Stories
 
-- [ ] User can filter study spots by characteristics such as noise level, outlets, Wi-Fi, or group-study availability.
-- [ ] User can search for a study spot by name.
+- [x] User can filter study spots by characteristics such as noise level, outlets, Wi-Fi, or group-study availability.
+- [x] User can search for a study spot by name.
 - [ ] User can view photos of study locations.
 - [ ] User can add a rating or personal note to a study spot.
 - [ ] User can submit a new study location.
@@ -71,15 +72,15 @@ The first version of PantherSpot will focus on FIU study locations, but the idea
   - User can view a list of available study spots.
   - Each list item displays basic information such as the study spot name, location, and general study environment.
   - User can tap a study spot to open its detail screen.
-  - Optional search and filtering controls can be added to this screen.
+  - Search by name, building, or campus and combine the query with filters.
 
 - [x] **Study Spot Detail Screen**
   - User can view detailed information about a selected study spot.
   - Shows the spot's name, description, building or area, noise level, seating, Wi-Fi, and outlet availability.
   - User can add or remove the study spot from their favorites.
-  - Planned for Sprint 2: view the study spot's location on a map.
+  - View the study spot's location on a map.
 
-- [ ] **Map Screen**
+- [x] **Map Screen**
   - User can view study spots as annotations on a map.
   - User can see their current location.
   - User can tap a map annotation to view information about a study spot.
@@ -92,7 +93,7 @@ The first version of PantherSpot will focus on FIU study locations, but the idea
 
 ### Optional Screens
 
-- [ ] **Filter Screen / Filter Sheet**
+- [x] **Filter Screen / Filter Sheet**
   - User can select filters such as quiet locations, outlets, Wi-Fi, or group-study spaces.
   - The selected filters update the study spots shown in Explore.
 
@@ -113,7 +114,7 @@ PantherSpot uses a bottom tab bar with three main sections:
   - Opens the Study Spot List Screen.
 
 - [x] **Map**
-  - Opens the Map placeholder. MapKit features are planned for Sprint 2.
+  - Opens the campus map with study spot pins and an optional current-location control.
 
 - [x] **Favorites**
   - Opens the Favorites Screen.
@@ -124,14 +125,14 @@ PantherSpot uses a bottom tab bar with three main sections:
 
 - [x] **Explore / Study Spot List Screen**
   - Tapping a study spot leads to the **Study Spot Detail Screen**.
-  - Planned for Sprint 2: tapping filter controls opens the **Filter Screen / Sheet**.
+  - Tapping Filters opens the **Filter Screen / Sheet**.
 
 - [x] **Study Spot Detail Screen**
   - User can return to the previous screen.
   - User can add or remove the study spot from favorites.
-  - Planned for Sprint 2: view the location of the study spot on a map.
+  - View the location of the study spot on a map and open walking directions in Apple Maps.
 
-- [ ] **Map Screen**
+- [x] **Map Screen**
   - Tapping a study spot annotation displays information about that location.
   - Selecting the location leads to the **Study Spot Detail Screen**.
 
@@ -139,7 +140,7 @@ PantherSpot uses a bottom tab bar with three main sections:
   - Tapping a saved study spot leads to the **Study Spot Detail Screen**.
   - Removing a favorite updates the Favorites Screen.
 
-- [ ] **Filter Screen / Sheet**
+- [x] **Filter Screen / Sheet**
   - Applying filters returns the user to the **Explore Screen** with updated results.
   - Canceling returns the user to the **Explore Screen** without changing the current results.
 
@@ -172,7 +173,7 @@ The digital mockup includes:
 
 ### [BONUS] Interactive Prototype
 
-Not implemented at this milestone.
+The wireframes above guided the SwiftUI implementation. We did not create a separate interactive prototype.
 
 ---
 
@@ -198,11 +199,11 @@ The `StudySpot` catalog now includes six FIU locations across MMC and BBC. Sprin
 | `seatingInfo` | `String` | Description of the seating |
 | `isGroupStudyFriendly` | `Bool` | Sample group-study suitability used by filters |
 
-`FavoritesManager` keeps a set of favorite study spot IDs shared by Explore and Favorites. Favorites currently last for the app session. Saving them between launches is planned for Sprint 2.
+`FavoritesManager` keeps one shared set of favorite study spot IDs for all screens. It saves those IDs locally with `UserDefaults` whenever favorites change and loads them when the app starts. Favorites stay on this device; there is no account or cloud sync.
 
 ### Networking
 
-Sprint 1 reads local sample data and makes no network requests. Maps and current-location features are planned for Sprint 2.
+The study spot catalog and favorites are stored locally. MapKit loads map content, Core Location provides optional device location, and official FIU links and directions open external services. The app has no custom backend.
 
 ---
 
@@ -234,7 +235,7 @@ The walkthrough shows Explore, study spot details, adding favorites, opening det
 
 ### Sprint 2 Plan
 
-Issues #9–#16 are created, assigned to the team members below, and added to the project board in Backlog under the Sprint 2 milestone.
+At the end of Sprint 1, we created issues #9–#16, assigned them as shown below, and added them to the project board in Backlog under the Sprint 2 milestone. These are the original assignments; we also helped each other finish and integrate the work.
 
 | Team member | Issues | Work |
 | --- | --- | --- |
@@ -243,6 +244,44 @@ Issues #9–#16 are created, assigned to the team members below, and added to th
 | Chris (`chriswynns2007`) | #15 | Add filter controls and reset options |
 | Sreeman (`SRM-bot-ship`) | #16 | Apply selected filters to Explore results |
 
+### Sprint 2 — Maps, Search, and Saved Favorites (Unit 9)
+
+We added a campus map, location controls, search, and filters. The catalog now has six FIU spots across MMC and BBC. We also added settings, appearance choices, a welcome screen, and links for directions and sharing.
+
+Favorites are saved on the device and restored when the app opens again. Search and filters work together so students can narrow the list without losing their saved spots.
+
+- [x] Browse study spot pins at MMC and BBC and open a spot’s details.
+- [x] Request current location and keep browsing if access is unavailable or denied.
+- [x] Search by spot name, building, or campus.
+- [x] Combine search with noise, Wi-Fi, outlet, and group-study filters.
+- [x] Apply, cancel, reset, and clear filters without losing the search query.
+- [x] Show a helpful message when no spots match.
+- [x] Save favorites locally and keep additions and removals after restarting the app.
+- [x] Choose System, Light, or Dark appearance and keep that preference.
+- [x] View official FIU references, open walking directions, and share a spot.
+
+Amenities and group-study suitability are sample information. Pins show approximate building locations. We do not show live occupancy, available seats, or opening hours. Photos, ratings, user submissions, distance sorting, and notifications remain outside this version.
+
+#### Sprint 2 Build Progress
+
+In Sprint 1, we had a simple list of three study spots, detail screens, and favorites for the current session. In Sprint 2, we expanded the catalog to six locations, redesigned the cards, and added search, combined filters, campus maps, and local favorites storage.
+
+The first GIF starts with the original Sprint 1 Explore screen, then shows the updated interface, a BBC search, and filters for quiet group-study spots with outlets.
+
+![Explore before and after, campus search, and combined filters](media/sprint2-search-filters.gif)
+
+The second GIF shows selecting a campus map pin, opening its details, saving the spot, and finding it in Favorites.
+
+![Campus map, spot details, and saving a favorite](media/sprint2-map-favorites.gif)
+
+#### Demo Day Practice Video
+
+Our 2-minute, 30-second practice demo introduces PantherSpot and walks through the main features. We show how an FIU student can find a study spot, compare amenities, and save places for later.
+
+[![Watch the PantherSpot Unit 9 practice demo on YouTube](https://i.ytimg.com/vi/OMcCQx5KISc/hqdefault.jpg)](https://youtu.be/OMcCQx5KISc)
+
+[Watch on YouTube — 2:30](https://youtu.be/OMcCQx5KISc)
+
 ### Sprint 3 Plan
 
-We plan to finish maps and saved favorites in Sprint 2. For Sprint 3, we will focus on testing, fixing bugs, checking layout and accessibility, and getting the demo and README ready for submission.
+Use the final sprint to rehearse the presentation, finish the final recording, and fix any bugs found during the walkthrough. Maps, search, filters, and local favorites are covered by the Sprint 2 work. We are keeping new features out of the final demo preparation.
