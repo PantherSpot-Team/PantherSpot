@@ -15,6 +15,7 @@ struct StudySpot: Identifiable {
     let hasWiFi: Bool
     let hasOutlets: Bool
     let seatingInfo: String
+    let isGroupStudyFriendly: Bool
 
     init(
         id: UUID = UUID(),
@@ -28,7 +29,8 @@ struct StudySpot: Identifiable {
         noiseLevel: String,
         hasWiFi: Bool,
         hasOutlets: Bool,
-        seatingInfo: String
+        seatingInfo: String,
+        isGroupStudyFriendly: Bool
     ) {
         self.id = id
         self.name = name
@@ -42,6 +44,7 @@ struct StudySpot: Identifiable {
         self.hasWiFi = hasWiFi
         self.hasOutlets = hasOutlets
         self.seatingInfo = seatingInfo
+        self.isGroupStudyFriendly = isGroupStudyFriendly
     }
 }
 

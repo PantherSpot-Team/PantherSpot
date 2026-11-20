@@ -196,6 +196,7 @@ The `StudySpot` catalog now includes six FIU locations across MMC and BBC. Sprin
 | `hasWiFi` | `Bool` | Whether Wi-Fi is available |
 | `hasOutlets` | `Bool` | Whether outlets are available |
 | `seatingInfo` | `String` | Description of the seating |
+| `isGroupStudyFriendly` | `Bool` | Sample group-study suitability used by filters |
 
 `FavoritesManager` keeps a set of favorite study spot IDs shared by Explore and Favorites. Favorites currently last for the app session. Saving them between launches is planned for Sprint 2.
 

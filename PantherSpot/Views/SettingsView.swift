@@ -112,7 +112,7 @@ private struct HowToUseView: View {
             Section {
                 Label("Find your next study spot", systemImage: "magnifyingglass")
                     .font(.headline)
-                Text("Start in Explore. Each card shows a spot’s campus and amenities. Tap a card for details.")
+                Text("Start in Explore. Search by spot name, building, or campus. Use Filters to choose a noise level, Wi-Fi, outlets, or group-study suitability, then tap Apply. Each card opens the spot’s details.")
             }
             Section {
                 Label("Build your shortlist", systemImage: "heart")
