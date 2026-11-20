@@ -15,7 +15,8 @@ extension StudySpot {
             noiseLevel: "Quiet",
             hasWiFi: true,
             hasOutlets: true,
-            seatingInfo: "Individual desks and study tables"
+            seatingInfo: "Individual desks and study tables",
+            isGroupStudyFriendly: true
         ),
 
         StudySpot(
@@ -30,7 +31,8 @@ extension StudySpot {
             noiseLevel: "Lively",
             hasWiFi: true,
             hasOutlets: false,
-            seatingInfo: "Shared tables and lounge seating"
+            seatingInfo: "Shared tables and lounge seating",
+            isGroupStudyFriendly: true
         ),
 
         StudySpot(
@@ -45,7 +47,8 @@ extension StudySpot {
             noiseLevel: "Quiet",
             hasWiFi: true,
             hasOutlets: true,
-            seatingInfo: "Individual desks and group study tables"
+            seatingInfo: "Individual desks and group study tables",
+            isGroupStudyFriendly: true
         ),
 
         StudySpot(
@@ -60,7 +63,8 @@ extension StudySpot {
             noiseLevel: "Lively",
             hasWiFi: true,
             hasOutlets: false,
-            seatingInfo: "Cafe tables; seating availability varies"
+            seatingInfo: "Cafe tables; seating availability varies",
+            isGroupStudyFriendly: false
         ),
 
         StudySpot(
@@ -75,7 +79,8 @@ extension StudySpot {
             noiseLevel: "Lively",
             hasWiFi: true,
             hasOutlets: true,
-            seatingInfo: "Common-area seating; check availability"
+            seatingInfo: "Common-area seating; check availability",
+            isGroupStudyFriendly: true
         ),
 
         StudySpot(
@@ -90,7 +95,8 @@ extension StudySpot {
             noiseLevel: "Quiet",
             hasWiFi: true,
             hasOutlets: false,
-            seatingInfo: "Tutoring seating; check appointment availability"
+            seatingInfo: "Tutoring seating; check appointment availability",
+            isGroupStudyFriendly: false
         )
     ]
 }

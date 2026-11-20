@@ -84,7 +84,9 @@ struct StudySpotDetailView: View {
                     DetailRow(icon: "powerplug.fill", label: "Outlets", value: spot.hasOutlets ? "Available" : "Not available")
                     Divider()
                     DetailRow(icon: "chair.lounge.fill", label: "Seating", value: spot.seatingInfo)
-                    Text("Amenity details are sample information. Check current conditions when you arrive.")
+                    Divider()
+                    DetailRow(icon: "person.2", label: "Group study", value: spot.isGroupStudyFriendly ? "Group friendly" : "Not indicated")
+                    Text("Amenities and group-study suitability are sample information. Check current conditions when you arrive.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }

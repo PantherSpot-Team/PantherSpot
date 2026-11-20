@@ -25,10 +25,12 @@ Each spot’s detail screen includes a labeled link to its official FIU referenc
 
 ## Sample information
 
-Noise, Wi-Fi, outlet availability at seats, and seating descriptions remain sample information for development. The WUC source confirms device charging stations, which does not guarantee a power outlet at a particular seat. No opening hours, live occupancy, available seats, or cafe operating status are promised. The map preview, detail screen, and Settings identify the sample amenities.
+Noise, Wi-Fi, outlet availability at seats, seating descriptions, and group-study suitability remain sample information for development. The WUC source confirms device charging stations, which does not guarantee a power outlet at a particular seat. No opening hours, live occupancy, available seats, or cafe operating status are promised. The map preview, detail screen, and Settings identify the sample amenities.
 
 Existing UUIDs and coordinates are unchanged. New UUIDs end in `0004` (MANGO), `0005` (WUC), and `0006` (AC1). Campus is stored explicitly rather than inferred from display text.
 
 ## Integration with the remaining sprint work
 
-Issue #15 has not yet introduced its group-study field on main. When it lands, add that field to all six records using its agreed type; treat any unverified group-study suitability as sample information. AC1's tutoring service must not be treated as evidence of an unrestricted group-study room. Then verify new records with favorites persistence (#13), search (#14), and the combined filters (#15–#16).
+`isGroupStudyFriendly` is explicit on all six records. Green Library, Graham Center, Hubert Library, and WUC are marked group friendly as sample suitability; MANGO and AC1 are not marked group friendly. This does not promise reservable rooms or unrestricted access. AC1’s tutoring service is not evidence of an unrestricted group-study room.
+
+`StudySpotFilters` stores applied selections and tests every active condition. Explore combines that result with `matchesSearch(_:)`. When integrating #16, reuse these types instead of adding separate filter state or parsing seating descriptions. Favorites persistence (#13) still needs its integration check after it lands.

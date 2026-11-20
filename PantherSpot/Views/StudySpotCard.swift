@@ -41,6 +41,13 @@ struct StudySpotCard: View {
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
 
+                    if spot.isGroupStudyFriendly {
+                        Label("Group study (sample)", systemImage: "person.2")
+                            .labelStyle(.titleAndIcon)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+
                     Text(spot.seatingInfo)
                         .font(.caption)
                         .foregroundStyle(.secondary)
