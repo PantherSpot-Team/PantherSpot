@@ -33,4 +33,4 @@ Existing UUIDs and coordinates are unchanged. New UUIDs end in `0004` (MANGO), `
 
 `isGroupStudyFriendly` is explicit on all six records. Green Library, Graham Center, Hubert Library, and WUC are marked group friendly as sample suitability; MANGO and AC1 are not marked group friendly. This does not promise reservable rooms or unrestricted access. AC1’s tutoring service is not evidence of an unrestricted group-study room.
 
-`StudySpotFilters` stores applied selections and tests every active condition. Explore combines that result with `matchesSearch(_:)`. When integrating #16, reuse these types instead of adding separate filter state or parsing seating descriptions. Favorites persistence (#13) still needs its integration check after it lands.
+`StudySpotFilters` stores applied selections and tests every active condition. Explore combines that result with `matchesSearch(_:)`. When integrating #16, reuse these types instead of adding separate filter state or parsing seating descriptions. Favorites persistence (#13) stores the same stable IDs locally; all six records keep their existing IDs and coordinates.
